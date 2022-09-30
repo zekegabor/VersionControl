@@ -72,18 +72,18 @@ namespace w26e72_VersionControl {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string FirstName {
+        internal static string LastName {
             get {
-                return ResourceManager.GetString("FirstName", resourceCulture);
+                return ResourceManager.GetString("LastName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string LastName {
+        internal static string Utónév {
             get {
-                return ResourceManager.GetString("LastName", resourceCulture);
+                return ResourceManager.GetString("Utónév", resourceCulture);
             }
         }
     }
