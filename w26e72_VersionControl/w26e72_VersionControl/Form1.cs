@@ -17,9 +17,9 @@ namespace w26e72_VersionControl
         public Form1()
         {
             InitializeComponent();
-            label2.Text = ResourceVC.LastName;
             button1.Text = ResourceVC.Add;
             button2.Text = ResourceVC.WriteButton;
+            button3.Text = ResourceVC.DeleteButton;
 
             listBox1.DataSource = users;
             listBox1.ValueMember = "ID";
@@ -27,6 +27,13 @@ namespace w26e72_VersionControl
 
             button1.MouseDown += Button1_MouseDown;
             button2.MouseDown += Button2_MouseDown;
+            button3.MouseDown += Button3_MouseDown;
+        }
+
+        private void Button3_MouseDown(object sender, MouseEventArgs e)
+        {
+            Entities.User u = (Entities.User)listBox1.SelectedItem;
+            users.Remove(u);
         }
 
         private void Button2_MouseDown(object sender, MouseEventArgs e)
