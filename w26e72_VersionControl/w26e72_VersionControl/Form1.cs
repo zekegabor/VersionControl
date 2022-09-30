@@ -15,6 +15,9 @@ namespace w26e72_VersionControl
         public Form1()
         {
             InitializeComponent();
+            label1.Text = ResourceVC.FirstName;
+            label2.Text = ResourceVC.LastName;
+            button1.Text = ResourceVC.Add;
         }
     }
 }
