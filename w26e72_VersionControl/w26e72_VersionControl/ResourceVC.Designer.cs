@@ -61,7 +61,7 @@ namespace w26e72_VersionControl {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Hozzáadás.
         /// </summary>
         internal static string Add {
             get {
@@ -75,6 +75,15 @@ namespace w26e72_VersionControl {
         internal static string LastName {
             get {
                 return ResourceManager.GetString("LastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fájlba kiírás.
+        /// </summary>
+        internal static string WriteButton {
+            get {
+                return ResourceManager.GetString("WriteButton", resourceCulture);
             }
         }
     }
