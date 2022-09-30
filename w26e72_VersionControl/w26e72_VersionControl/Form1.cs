@@ -16,7 +16,6 @@ namespace w26e72_VersionControl
         public Form1()
         {
             InitializeComponent();
-            label1.Text = ResourceVC.FirstName;
             label2.Text = ResourceVC.LastName;
             button1.Text = ResourceVC.Add;
 
@@ -31,8 +30,8 @@ namespace w26e72_VersionControl
         {
             var u = new Entities.User()
             {
-                LastName = textBox1.Text,
-                FirstName = textBox2.Text
+                FullName = textBox1.Text,
+                //FirstName = textBox2.Text
             };
             users.Add(u);
         }
