@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace w26e72_VersionControl.Entities
 {
-    class User
+    public class User
     {
         public Guid ID { get; set; } = Guid.NewGuid();
         public string FirstName { get; set; }
