@@ -75,11 +75,25 @@ namespace week4_W26E72
             {
                 xlSheet.Cells[i, i + 1] = headers[i];
             }
+            object[,] values = new object[Flats.Count, headers.Length];
+            int count = 0;
+            foreach (var f in Flats)
+            {
+                values[count, 0] = f.Code;
+                values[count, 1] = f.Vendor;
+                values[count, 2] = f.Side;
+                values[count, 3] = f.District;
+                values[count, 4] = f.Elevator;
+                values[count, 5] = f.NumberOfRooms;
+                values[count, 6] = f.FloorArea;
+                values[count, 7] = f.Price;
+                count++;
+            }
         }
 
         private void LoadData()
         {
-            Flats = context.Flats.ToList();  
+            Flats = context.Flat.ToList();  
         }
     }
 }
