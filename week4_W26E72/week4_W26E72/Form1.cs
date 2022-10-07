@@ -86,6 +86,7 @@ namespace week4_W26E72
                 values[count, 5] = f.NumberOfRooms;
                 values[count, 6] = f.FloorArea;
                 values[count, 7] = f.Price;
+                values[count, 8] = $"=H{count+2}/G{count+2}";
                 count++;
             }
             xlSheet.get_Range(
