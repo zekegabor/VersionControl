@@ -21,20 +21,29 @@ namespace week5_W26E72
 
             InitializeComponent();
 
-            var getCurrType = new MNBServRef.GetExchangeRatesRequestBody()
-            {
-                //currencyNames = comboBox1.SelectedItem.ToString(),
-                currencyNames = "EUR",
-                startDate = dateTimePicker1.Value.ToString(),
-                endDate = dateTimePicker2.Value.ToString()
-            };
-            var curr = new MNBServRef.GetCurrenciesRequestBody(getCurrType);
+            GetCurrencies();
+
 
             RefreshData();
 
             dateTimePicker1.MouseDown += DateTimePicker1_MouseDown;
             dateTimePicker2.MouseDown += DateTimePicker2_MouseDown;
             comboBox1.MouseDown += ComboBox1_MouseDown;
+        }
+
+        private void GetCurrencies()
+        {
+            var mnbReq = new MNBServRef.MNBArfolyamServiceSoapClient();
+            var curr = new MNBServRef.GetCurrenciesRequestBody();
+            var MnbGetExResp = mnbReq.GetCurrencies(curr);
+            var result = MnbGetExResp.GetCurrenciesResult;
+
+            XmlDocument xml = new XmlDocument();
+            xml.LoadXml(result);
+            foreach (XmlElement x in xml.DocumentElement.ChildNodes[0])
+            {
+                Currencies.Add(x.InnerText);
+            }
         }
 
         private void ComboBox1_MouseDown(object sender, MouseEventArgs e)
