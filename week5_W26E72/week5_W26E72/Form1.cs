@@ -15,17 +15,54 @@ namespace week5_W26E72
     public partial class Form1 : Form
     {
         BindingList<Entities.RateData> Rates = new BindingList<Entities.RateData>();
+        BindingList<string> Currencies = new BindingList<string>();
         public Form1()
         {
 
-            InitializeComponent();           
+            InitializeComponent();
 
+            var getCurrType = new MNBServRef.GetExchangeRatesRequestBody()
+            {
+                //currencyNames = comboBox1.SelectedItem.ToString(),
+                currencyNames = "EUR",
+                startDate = dateTimePicker1.Value.ToString(),
+                endDate = dateTimePicker2.Value.ToString()
+            };
+            var curr = new MNBServRef.GetCurrenciesRequestBody(getCurrType);
+
+            RefreshData();
+
+            dateTimePicker1.MouseDown += DateTimePicker1_MouseDown;
+            dateTimePicker2.MouseDown += DateTimePicker2_MouseDown;
+            comboBox1.MouseDown += ComboBox1_MouseDown;
+        }
+
+        private void ComboBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            RefreshData();
+        }
+
+        private void DateTimePicker2_MouseDown(object sender, MouseEventArgs e)
+        {
+            RefreshData();
+        }
+
+        private void DateTimePicker1_MouseDown(object sender, MouseEventArgs e)
+        {
+            RefreshData();
+        }
+
+        private void RefreshData()
+        {
+            Rates.Clear();
+            
             var mnbReq = new MNBServRef.MNBArfolyamServiceSoapClient();
             var getCurr = new MNBServRef.GetExchangeRatesRequestBody()
-            { 
+            {
+                //currencyNames = comboBox1.SelectedItem.ToString(),
                 currencyNames = "EUR",
-                startDate = "2020-01-01",
-                endDate = "2020-06-30"
+                startDate = dateTimePicker1.Value.ToString(),
+                endDate = dateTimePicker2.Value.ToString()
             };
             var MnbGetExResp = mnbReq.GetExchangeRates(getCurr);
             var result = MnbGetExResp.GetExchangeRatesResult;
@@ -33,6 +70,8 @@ namespace week5_W26E72
             XMLWork(result);
 
             dataGridView1.DataSource = Rates;
+
+            comboBox1.DataSource = Currencies;
 
             chartRateData.DataSource = Rates;
             var series = chartRateData.Series[0];
