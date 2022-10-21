@@ -107,6 +107,10 @@ namespace week5_W26E72
                 var ratDat = new Entities.RateData();
                 ratDat.Date = DateTime.Parse(x.GetAttribute("date"));
                 var firstChild = (XmlElement)x.ChildNodes[0];
+                if (firstChild == null)
+                {
+                    continue;
+                }
                 ratDat.Currency = firstChild.GetAttribute("curr");
                 var unit = decimal.Parse(firstChild.GetAttribute("unit"));
                 var value = decimal.Parse(firstChild.InnerText);
