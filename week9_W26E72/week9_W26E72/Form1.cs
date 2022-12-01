@@ -46,6 +46,7 @@ namespace week9_W26E72
                               where p.Gender == Gender.Female && p.IsAlive
                               select p
                                 ).Count();
+
             }
         }
 
@@ -143,7 +144,7 @@ namespace week9_W26E72
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                string sFileName = ofd.FileName;        
+                textBox1.Text = ofd.FileName;        
             }
         }
     }
