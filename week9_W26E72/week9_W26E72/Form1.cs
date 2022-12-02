@@ -25,39 +25,49 @@ namespace week9_W26E72
         public Form1()
         {
             InitializeComponent();
-            Population = PersonCreate(@"C:\Temp\nép.csv");
-            BirthProbabilities = BirthProbCreate(@"C:\Temp\születés.csv");
-            DeathProbabilities = DeathProbCreate(@"C:\Temp\halál.csv");
+
 
             button2.Click += Button2_Click;
 
             //sim
-            Simulation();
 
-            DisplayResults();
 
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
+            richTextBox1.Clear();
             Simulation();
+            DisplayResults();
         }
 
         private void DisplayResults()
         {
-            for (int i = 2005; i <= 2024; i++)
+            string result = "";
+            
+            for (int i = 2005; i <= malecount.Count(); i++)
             {
-                richTextBox1.Text = $"Szimulációs év: {i}\n\tFiúk: {malecount[i - 2005]}\n\tLányok: {femalecount[i - 2005]}";
-            }
+                string r = "";
+                int males = malecount[i];
+                int females = femalecount[i];
+                r = $"Szimulációs év: {i}\n\tFiúk: {males}\n\tLányok: {females}\n";
+                result = result + r;
+            }richTextBox1.Text = result;
+
         }
 
         private void Simulation()
         {
-            for (int i = 2005; i <= 2024; i++)
+            Population = PersonCreate(textBox1.Text);
+            BirthProbabilities = BirthProbCreate(@"C:\Temp\születés.csv");
+            DeathProbabilities = DeathProbCreate(@"C:\Temp\halál.csv");
+            for (int i = 2005; i <= int.Parse(numericUpDown1.Text)+1; i++)
             {
                 for (int j = 0; j < Population.Count; j++)
                 {
-                    //SimStep(i, Person);
+                    Person p = new Person();
+                    p = Population[j];
+                    SimStep(i, p);
                 }
                 int nbrMale = (from p in Population
                                where p.Gender == Gender.Male && p.IsAlive
@@ -66,7 +76,8 @@ namespace week9_W26E72
                               where p.Gender == Gender.Female && p.IsAlive
                               select p
                                 ).Count();
-
+                Console.WriteLine(
+                    string.Format("Év:{0} Fiúk:{1} Lányok:{2}", i, nbrMale, nbrFem));
             }
         }
 
@@ -113,7 +124,7 @@ namespace week9_W26E72
             List<DeathProbability> death = new List<DeathProbability>();
             using (StreamReader sr = new StreamReader(csvpath, Encoding.Default))
             {
-                while (sr.EndOfStream)
+                while (!sr.EndOfStream)
                 {
                     var line = sr.ReadLine().Split(';');
                     DeathProbability dp = new DeathProbability();
@@ -131,13 +142,13 @@ namespace week9_W26E72
             List<BirthProbability> birth = new List<BirthProbability>();
             using (StreamReader sr = new StreamReader(csvpath, Encoding.Default))
             {
-                while (sr.EndOfStream)
+                while (!sr.EndOfStream)
                 {
                     var line = sr.ReadLine().Split(';');
                     BirthProbability bp = new BirthProbability();
                     bp.Age = int.Parse(line[0]);
                     bp.ChildNum = int.Parse(line[1]);
-                    bp.P = int.Parse(line[2]);
+                    bp.P = double.Parse(line[2]);
                     BirthProbabilities.Add(bp);
                 }
             }
@@ -149,14 +160,14 @@ namespace week9_W26E72
             List<Person> population = new List<Person>();
             using (StreamReader sr = new StreamReader(csvpath, Encoding.Default))
             {
-                while (sr.EndOfStream)
+                while (!sr.EndOfStream)
                 {
                     var line = sr.ReadLine().Split(';');
                     Person p = new Person();
                     p.BirthYear = int.Parse(line[0]);
                     p.Gender = (Gender)Enum.Parse(typeof(Gender), line[1]);
                     p.ChildNum = int.Parse(line[2]);
-                    Population.Add(p);
+                    population.Add(p);
                 }
             }
             return population;
