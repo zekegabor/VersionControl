@@ -19,16 +19,36 @@ namespace week9_W26E72
         List<DeathProbability> DeathProbabilities = new List<DeathProbability>();
 
         Random rng = new Random(1234);
+
+        List<int> malecount = new List<int>();
+        List<int> femalecount = new List<int>();
         public Form1()
         {
             InitializeComponent();
-            Population = PersonCreate("");
-            BirthProbabilities = BirthProbCreate("");
-            DeathProbabilities = DeathProbCreate("");
+            Population = PersonCreate(@"C:\Temp\nép.csv");
+            BirthProbabilities = BirthProbCreate(@"C:\Temp\születés.csv");
+            DeathProbabilities = DeathProbCreate(@"C:\Temp\halál.csv");
+
+            button2.Click += Button2_Click;
 
             //sim
             Simulation();
 
+            DisplayResults();
+
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            Simulation();
+        }
+
+        private void DisplayResults()
+        {
+            for (int i = 2005; i <= 2024; i++)
+            {
+                richTextBox1.Text = $"Szimulációs év: {i}\n\tFiúk: {malecount[i - 2005]}\n\tLányok: {femalecount[i - 2005]}";
+            }
         }
 
         private void Simulation()
@@ -78,6 +98,14 @@ namespace week9_W26E72
                     Population.Add(p);
                 }
             }
+            int malec = (from x in Population
+                         where x.Gender == Gender.Male
+                        select x).Count();
+            malecount.Add(malec);
+            int femalec = (from x in Population
+                           where x.Gender == Gender.Female
+                           select x).Count();
+            femalecount.Add(femalec);
         }
 
         private List<DeathProbability> DeathProbCreate(string csvpath)
