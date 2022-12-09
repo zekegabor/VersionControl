@@ -26,12 +26,10 @@ namespace week10_W26E72
         public Form1()
         {
             InitializeComponent();
+            button1.Visible = false;
 
             ga = gc.ActivateDisplay();
             this.Controls.Add(ga);
-
-            gc.AddPlayer();
-            gc.Start(true);
 
             gc.GameOver += Gc_GameOver;
 
@@ -75,7 +73,7 @@ namespace week10_W26E72
             gc.Start();
 
             var winners = from p in topPerformers
-                          where p.IsWinner
+                          where !p.IsWinner
                           select p;
 
             if (winners.Count() > 0)
